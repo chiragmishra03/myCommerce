@@ -1,6 +1,8 @@
 package com.app.myCommerce.controller;
 
 import com.app.myCommerce.dto.CreateProductRequestDTO;
+import com.app.myCommerce.dto.GetProductResponseDTO;
+import com.app.myCommerce.dto.GetProductWithDetailsResponseDTO;
 import com.app.myCommerce.schema.Product;
 import com.app.myCommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/getAll")
+    @GetMapping("/get-all")
     public ResponseEntity<?> getAllProducts(){
         return ResponseEntity.status(HttpStatus.OK).body(productService.getAllProducts());
     }
@@ -25,7 +27,16 @@ public class ProductController {
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id){
         try{
             Product recievedProduct = productService.getProductById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(recievedProduct);
+            GetProductResponseDTO responseDTO = GetProductResponseDTO.builder()
+                    .title(recievedProduct.getTitle())
+                    .description(recievedProduct.getDescription())
+                    .id(recievedProduct.getId())
+                    .rating(recievedProduct.getRating())
+                    .price(recievedProduct.getPrice())
+                    .units(recievedProduct.getUnits())
+                    .image(recievedProduct.getImage())
+                    .build();
+            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -51,5 +62,26 @@ public class ProductController {
     public ResponseEntity<?> getAllUniqueCategories(){
         return ResponseEntity.status(HttpStatus.FOUND).body(productService.getAllUniqueCategories());
     }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<?> getDetailsOfProduct(@PathVariable("id") Long id){
+        try{
+            Product recievedProduct = productService.getProductById(id);
+            GetProductWithDetailsResponseDTO responseDTO = GetProductWithDetailsResponseDTO.builder()
+                    .title(recievedProduct.getTitle())
+                    .description(recievedProduct.getDescription())
+                    .id(recievedProduct.getId())
+                    .rating(recievedProduct.getRating())
+                    .price(recievedProduct.getPrice())
+                    .units(recievedProduct.getUnits())
+                    .image(recievedProduct.getImage())
+                    .category(recievedProduct.getCategory())
+                    .build();
+            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
 
 }

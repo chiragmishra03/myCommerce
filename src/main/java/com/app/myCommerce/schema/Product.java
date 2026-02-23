@@ -13,21 +13,28 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Inheritance(strategy = InheritanceType.JOINED )
 @Table(name = "products")
 public class Product extends BaseEntity {
+
     @Column(nullable = false)
     private String title;
+
     @Column(nullable = false,columnDefinition = "TEXT")
     private String description;
+
     @Column(nullable = false)
     private BigDecimal price;
+
     private String image;
-    @Column(nullable = false)
-    private String category;
+
     private String rating;
+
     @Column(nullable = false)
     private BigDecimal units;
 
+
+    @JoinColumn(name = "category_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
 }

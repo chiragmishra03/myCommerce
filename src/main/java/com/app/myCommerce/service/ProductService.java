@@ -1,20 +1,40 @@
 package com.app.myCommerce.service;
 
 import com.app.myCommerce.dto.CreateProductRequestDTO;
+import com.app.myCommerce.dto.GetProductResponseDTO;
 import com.app.myCommerce.repositories.ProductRepository;
+import com.app.myCommerce.schema.Category;
 import com.app.myCommerce.schema.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
-    public List<Product> getAllProducts(){
-        return productRepository.findAll();
+    public List<GetProductResponseDTO> getAllProducts(){
+        List<Product> products =  productRepository.findAll();
+
+        List<GetProductResponseDTO> responseDTOS = new ArrayList<>();
+
+        for(Product product:products){
+            GetProductResponseDTO responseDTO = GetProductResponseDTO.builder()
+                    .title(product.getTitle())
+                    .description(product.getDescription())
+                    .id(product.getId())
+                    .rating(product.getRating())
+                    .price(product.getPrice())
+                    .units(product.getUnits())
+                    .image(product.getImage())
+                    .build();
+            responseDTOS.add(responseDTO);
+        }
+        return responseDTOS;
     }
 
     public Product getProductById(Long id){
@@ -22,6 +42,9 @@ public class ProductService {
     }
 
     public Product createProduct(CreateProductRequestDTO requestDTO){
+
+        Category category = categoryService.getCategoryById(requestDTO.getCategoryId());
+
         Product product = Product.builder().
                 title(requestDTO.getTitle()).
                 description(requestDTO.getDescription()).
@@ -29,7 +52,7 @@ public class ProductService {
                 image(requestDTO.getImage()).
                 price(requestDTO.getPrice()).
                 units(requestDTO.getUnits()).
-                category(requestDTO.getCategory()).
+                category(category).
                 build();
 
         return productRepository.save(product);

@@ -17,7 +17,7 @@ public class CreateProductRequestDTO {
     private String description;
     private BigDecimal price;
     private String image;
-    private String category;
+    private Long categoryId;
     private String rating;
     private BigDecimal units;
 
