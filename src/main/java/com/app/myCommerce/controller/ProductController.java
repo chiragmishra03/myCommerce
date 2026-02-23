@@ -47,7 +47,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.FOUND).body(productService.getProductsByCategory(category));
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/categories/all")
     public ResponseEntity<?> getAllUniqueCategories(){
         return ResponseEntity.status(HttpStatus.FOUND).body(productService.getAllUniqueCategories());
     }
