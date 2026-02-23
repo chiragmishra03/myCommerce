@@ -1,9 +1,6 @@
 package com.app.myCommerce.schema;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @Inheritance(strategy = InheritanceType.JOINED )
+@Table(name = "products")
 public class Product extends BaseEntity {
     @Column(nullable = false)
     private String title;
