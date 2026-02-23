@@ -1,4 +1,4 @@
-package com.myCommerce.myCommerce;
+package com.app.myCommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
