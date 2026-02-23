@@ -1,4 +1,4 @@
-package com.app.myCommerce.dto;
+package com.app.myCommerce.dto.categories.create;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

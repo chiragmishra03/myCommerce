@@ -1,7 +1,7 @@
 package com.app.myCommerce.service;
 
-import com.app.myCommerce.dto.CreateProductRequestDTO;
-import com.app.myCommerce.dto.GetProductResponseDTO;
+import com.app.myCommerce.dto.product.create.CreateProductRequestDTO;
+import com.app.myCommerce.dto.product.get.GetProductResponseDTO;
 import com.app.myCommerce.repositories.ProductRepository;
 import com.app.myCommerce.schema.Category;
 import com.app.myCommerce.schema.Product;

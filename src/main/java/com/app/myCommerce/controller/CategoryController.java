@@ -1,9 +1,7 @@
 package com.app.myCommerce.controller;
 
-import com.app.myCommerce.dto.CreateCategoryRequestDTO;
-import com.app.myCommerce.dto.CreateProductRequestDTO;
+import com.app.myCommerce.dto.categories.create.CreateCategoryRequestDTO;
 import com.app.myCommerce.schema.Category;
-import com.app.myCommerce.schema.Product;
 import com.app.myCommerce.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

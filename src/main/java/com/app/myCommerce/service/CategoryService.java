@@ -1,6 +1,6 @@
 package com.app.myCommerce.service;
 
-import com.app.myCommerce.dto.CreateCategoryRequestDTO;
+import com.app.myCommerce.dto.categories.create.CreateCategoryRequestDTO;
 import com.app.myCommerce.repositories.CategoryRepository;
 import com.app.myCommerce.schema.Category;
 import lombok.RequiredArgsConstructor;

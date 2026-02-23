@@ -1,8 +1,8 @@
 package com.app.myCommerce.controller;
 
-import com.app.myCommerce.dto.CreateProductRequestDTO;
-import com.app.myCommerce.dto.GetProductResponseDTO;
-import com.app.myCommerce.dto.GetProductWithDetailsResponseDTO;
+import com.app.myCommerce.dto.product.create.CreateProductRequestDTO;
+import com.app.myCommerce.dto.product.get.GetProductResponseDTO;
+import com.app.myCommerce.dto.product.get.GetProductWithDetailsResponseDTO;
 import com.app.myCommerce.schema.Product;
 import com.app.myCommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
