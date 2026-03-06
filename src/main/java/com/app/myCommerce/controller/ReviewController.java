@@ -1,9 +1,11 @@
 package com.app.myCommerce.controller;
 
+import com.app.myCommerce.schema.Review;
 import com.app.myCommerce.service.ReviewService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
@@ -11,5 +13,35 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReviewController {
 
     private final ReviewService reviewService;
+
+    @GetMapping
+    public List<Review> getAllReviews() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @PostMapping
+    public Review createReview() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteReview(@PathVariable Long id) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @GetMapping("/{id}")
+    public Review getReviewById(@PathVariable Long id) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @GetMapping("/product/{productId}")
+    public List<Review> getReviewsByProductId(@PathVariable Long productId) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @GetMapping("/order/{orderId}")
+    public List<Review> getReviewsByOrderId(@PathVariable Long orderId) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 
 }
