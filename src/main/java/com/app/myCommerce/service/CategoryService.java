@@ -26,7 +26,7 @@ public class CategoryService {
     }
 
     public Category getCategoryById(Long id){
-        return categoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Product Not Found"));
+        return categoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Category Not Found"));
     }
 
     public void deleteCategoryById(Long id){
