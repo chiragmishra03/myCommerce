@@ -32,4 +32,8 @@ public class CategoryService {
     public void deleteCategoryById(Long id){
         categoryRepository.deleteById(id);
     }
+
+    public List<String> getAllUniqueCategories(){
+        return categoryRepository.findCategories();
+    }
 }

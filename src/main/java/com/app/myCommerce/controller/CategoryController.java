@@ -41,4 +41,9 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully");
     }
 
+    @GetMapping("/categories/all")
+    public ResponseEntity<?> getAllUniqueCategories(){
+        return ResponseEntity.status(HttpStatus.FOUND).body(categoryService.getAllUniqueCategories());
+    }
+
 }

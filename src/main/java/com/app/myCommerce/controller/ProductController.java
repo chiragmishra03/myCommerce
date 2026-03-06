@@ -58,11 +58,6 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.FOUND).body(productService.getProductsByCategory(category));
     }
 
-    @GetMapping("/categories/all")
-    public ResponseEntity<?> getAllUniqueCategories(){
-        return ResponseEntity.status(HttpStatus.FOUND).body(productService.getAllUniqueCategories());
-    }
-
     @GetMapping("/{id}/details")
     public ResponseEntity<?> getDetailsOfProduct(@PathVariable("id") Long id){
         try{

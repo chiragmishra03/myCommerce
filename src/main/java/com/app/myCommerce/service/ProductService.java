@@ -41,7 +41,7 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(()-> new RuntimeException("Product Not Found"));
     }
 
-    public Product createProduct(CreateProductRequestDTO requestDTO){
+    public GetProductResponseDTO createProduct(CreateProductRequestDTO requestDTO){
 
         Category category = categoryService.getCategoryById(requestDTO.getCategoryId());
 
@@ -55,7 +55,17 @@ public class ProductService {
                 category(category).
                 build();
 
-        return productRepository.save(product);
+        Product savedProduct = productRepository.save(product);
+
+        GetProductResponseDTO getProductResponseDTO = GetProductResponseDTO.builder() .
+                title(savedProduct.getTitle()).
+                description(savedProduct.getDescription()).
+                price(savedProduct.getPrice()).
+                image(savedProduct.getImage()).
+                rating(savedProduct.getRating()).
+                units(savedProduct.getUnits()).build();
+
+        return getProductResponseDTO;
     }
 
     public void deleteProductById(Long id){
@@ -66,7 +76,4 @@ public class ProductService {
         return productRepository.findByCategory(category);
     }
 
-    public List<String> getAllUniqueCategories(){
-        return productRepository.findCategories();
-    }
 }
