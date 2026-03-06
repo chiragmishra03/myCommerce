@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @Table(name = "products")
-@SQLDelete(sql="UPDATE categories set deleted_at = CURRENT_TIMESTAMP where id=?")
+@SQLDelete(sql="UPDATE products set deleted_at = CURRENT_TIMESTAMP where id=?")
 @SQLRestriction("deleted_at IS NULL")
 public class Product extends BaseEntity {
 
@@ -31,10 +31,10 @@ public class Product extends BaseEntity {
 
     private String image;
 
-    private String rating;
+    private BigDecimal rating;
 
     @Column(nullable = false)
-    private BigDecimal units;
+    private Integer units;
 
 
     @JoinColumn(name = "category_id",nullable = false)

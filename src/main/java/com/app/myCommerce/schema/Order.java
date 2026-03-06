@@ -18,13 +18,14 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @Table(name = "orders")
-@SQLDelete(sql="UPDATE categories set deleted_at = CURRENT_TIMESTAMP where id=?")
+@SQLDelete(sql="UPDATE orders set deleted_at = CURRENT_TIMESTAMP where id=?")
 @SQLRestriction("deleted_at IS NULL")
 public class Order extends BaseEntity{
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @Column(nullable = false)
-    private BigDecimal finalPrice;
+    private BigDecimal totalValue;
 
 }

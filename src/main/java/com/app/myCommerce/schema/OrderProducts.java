@@ -14,7 +14,7 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor
 @Builder
 @Table(name = "orders_products")
-@SQLDelete(sql="UPDATE categories set deleted_at = CURRENT_TIMESTAMP where id=?")
+@SQLDelete(sql="UPDATE orders_products set deleted_at = CURRENT_TIMESTAMP where id=?")
 @SQLRestriction("deleted_at IS NULL")
 public class OrderProducts extends BaseEntity{
 

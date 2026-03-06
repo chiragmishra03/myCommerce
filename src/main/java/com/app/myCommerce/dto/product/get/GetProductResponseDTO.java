@@ -23,8 +23,8 @@ public class GetProductResponseDTO {
 
     protected String image;
 
-    protected String rating;
+    protected BigDecimal rating;
 
-    protected BigDecimal units;
+    protected Integer units;
 
 }
