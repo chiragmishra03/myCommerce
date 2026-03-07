@@ -1,6 +1,7 @@
 package com.app.myCommerce.service;
 
 import com.app.myCommerce.dto.categories.create.CreateCategoryRequestDTO;
+import com.app.myCommerce.exceptions.ResourceNotFound;
 import com.app.myCommerce.repositories.CategoryRepository;
 import com.app.myCommerce.schema.Category;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +27,12 @@ public class CategoryService {
     }
 
     public Category getCategoryById(Long id){
-        return categoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Category Not Found"));
+        return categoryRepository.findById(id).orElseThrow(()-> new ResourceNotFound("Category Not Found with id: "+id));
     }
 
     public void deleteCategoryById(Long id){
-        categoryRepository.deleteById(id);
+        Category foundCategory = categoryRepository.findById(id).orElseThrow(()-> new ResourceNotFound("Category Not Found with id: "+id));
+        categoryRepository.delete(foundCategory);
     }
 
     public List<String> getAllUniqueCategories(){
