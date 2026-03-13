@@ -1,4 +1,4 @@
-package com.app.myCommerce.dto.product.create;
+package com.app.myCommerce.dto.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class CreateProductRequestDTO {
 
     private String title;
     private String description;
-    private BigDecimal price;
+    private Integer price;
     private String image;
     private Long categoryId;
     private BigDecimal rating;

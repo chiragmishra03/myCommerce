@@ -1,4 +1,4 @@
-package com.app.myCommerce.dto.product.get;
+package com.app.myCommerce.dto.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +19,7 @@ public class GetProductResponseDTO {
 
     protected String description;
 
-    protected BigDecimal price;
+    protected Integer price;
 
     protected String image;
 

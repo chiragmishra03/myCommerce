@@ -1,10 +1,13 @@
 package com.app.myCommerce.service;
 
-import com.app.myCommerce.dto.product.create.CreateProductRequestDTO;
-import com.app.myCommerce.dto.product.get.GetProductResponseDTO;
+import com.app.myCommerce.dto.product.CreateProductRequestDTO;
+import com.app.myCommerce.dto.product.GetProductResponseDTO;
+import com.app.myCommerce.exceptions.ResourceNotFound;
+import com.app.myCommerce.mappers.ProductMapper;
 import com.app.myCommerce.repositories.ProductRepository;
 import com.app.myCommerce.schema.Category;
 import com.app.myCommerce.schema.Product;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
+    private final ProductMapper productMapper;
 
     public List<GetProductResponseDTO> getAllProducts(){
         List<Product> products =  productRepository.findAll();
@@ -74,6 +78,28 @@ public class ProductService {
 
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
+    }
+
+    public GetProductResponseDTO updateProduct(Long id,CreateProductRequestDTO requestDTO){
+        Product product = productMapper.mapToProductEntity(requestDTO);
+        Product recievedProduct = productRepository.findById(id).orElseThrow(()->new ResourceNotFound("Product Not Found with id "+id));
+        product.setId(recievedProduct.getId());
+        return productMapper.mapToCreateProductReqDto(productRepository.save(product));
+    }
+
+    @Transactional
+    public void reduceUnits(Long productId, int quantity) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFound("Product not found with id " + productId));
+
+        if (product.getUnits() < quantity) {
+            throw new RuntimeException("Insufficient stock for product id " + productId);
+        }
+
+        product.setUnits(product.getUnits() - quantity);
+
+        productRepository.save(product);
     }
 
 }

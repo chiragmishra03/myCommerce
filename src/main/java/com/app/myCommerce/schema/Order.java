@@ -26,6 +26,6 @@ public class Order extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @Column(nullable = false)
-    private BigDecimal totalValue;
+    private Integer totalValue;
 
 }

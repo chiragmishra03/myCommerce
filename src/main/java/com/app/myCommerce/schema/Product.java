@@ -27,7 +27,7 @@ public class Product extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private Integer price;
 
     private String image;
 

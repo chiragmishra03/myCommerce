@@ -1,6 +1,6 @@
 package com.app.myCommerce.controller;
 
-import com.app.myCommerce.dto.categories.create.CreateCategoryRequestDTO;
+import com.app.myCommerce.dto.categories.CreateCategoryRequestDTO;
 import com.app.myCommerce.schema.Category;
 import com.app.myCommerce.service.CategoryService;
 import com.app.myCommerce.utilities.api.APIStructure;

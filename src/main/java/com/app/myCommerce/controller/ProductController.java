@@ -1,8 +1,8 @@
 package com.app.myCommerce.controller;
 
-import com.app.myCommerce.dto.product.create.CreateProductRequestDTO;
-import com.app.myCommerce.dto.product.get.GetProductResponseDTO;
-import com.app.myCommerce.dto.product.get.GetProductWithDetailsResponseDTO;
+import com.app.myCommerce.dto.product.CreateProductRequestDTO;
+import com.app.myCommerce.dto.product.GetProductResponseDTO;
+import com.app.myCommerce.dto.product.GetProductWithDetailsResponseDTO;
 import com.app.myCommerce.schema.Product;
 import com.app.myCommerce.service.ProductService;
 import com.app.myCommerce.utilities.api.APIStructure;
@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIStructure<GetProductResponseDTO>> getProductById(@PathVariable Long id){
+    public ResponseEntity<APIStructure<GetProductResponseDTO>> getProductById(@PathVariable("id") Long id){
 
         Product recievedProduct = productService.getProductById(id);
 
@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<APIStructure<String>> deleteProductById(@PathVariable Long id){
+    public ResponseEntity<APIStructure<String>> deleteProductById(@PathVariable("id") Long id){
 
         productService.deleteProductById(id);
         return ResponseEntity.status(HttpStatus.OK).body(APIStructure.success("Deleted Successfully", "Product deleted successfully"));
@@ -65,7 +65,7 @@ public class ProductController {
 
 
     @GetMapping("/{id}/details")
-    public ResponseEntity<APIStructure<GetProductWithDetailsResponseDTO>> getDetailsOfProduct(@PathVariable Long id){
+    public ResponseEntity<APIStructure<GetProductWithDetailsResponseDTO>> getDetailsOfProduct(@PathVariable("id") Long id){
 
         Product recievedProduct = productService.getProductById(id);
 
@@ -85,5 +85,9 @@ public class ProductController {
                 .body(APIStructure.success(responseDTO,"Product details fetched successfully"));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<APIStructure<GetProductResponseDTO>> updateProduct(@PathVariable("id") Long id,@RequestBody CreateProductRequestDTO productRequestDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(APIStructure.success(productService.updateProduct(id,productRequestDTO), "Product updated successfully"));
+    }
 
 }
