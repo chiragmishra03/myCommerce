@@ -6,6 +6,7 @@ import com.app.myCommerce.schema.Order;
 import com.app.myCommerce.service.OrderService;
 import com.app.myCommerce.utilities.api.APIStructure;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,9 @@ public class OrderController {
 
 
     @GetMapping("/get-all")
-    public List<Order> getAllOrders() {
-        throw new UnsupportedOperationException("Not implemented");
+    public ResponseEntity<APIStructure<List<OrderResponseDto>>> getAllOrders(@RequestParam(value = "orderItems",defaultValue = "true",required = false)boolean orderItems) {
+        List<OrderResponseDto> orderResponseDtoList = orderService.getAllOrders(orderItems);
+        return ResponseEntity.status(HttpStatus.OK).body(APIStructure.success(orderResponseDtoList,"Orders fetched successfully"));
     }
 
     @PostMapping("/create")

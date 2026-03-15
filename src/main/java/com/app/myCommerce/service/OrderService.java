@@ -3,8 +3,10 @@ package com.app.myCommerce.service;
 import com.app.myCommerce.dto.orders.CreateOrderDto;
 import com.app.myCommerce.dto.orders.OrderItemsDto;
 import com.app.myCommerce.dto.orders.OrderResponseDto;
+import com.app.myCommerce.dto.product.GetProductResponseDTO;
 import com.app.myCommerce.exceptions.ResourceNotFound;
 import com.app.myCommerce.mappers.OrderMapper;
+import com.app.myCommerce.mappers.ProductMapper;
 import com.app.myCommerce.repositories.OrderProductRepository;
 import com.app.myCommerce.repositories.OrderRepository;
 import com.app.myCommerce.repositories.ProductRepository;
@@ -16,6 +18,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,11 +33,48 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final ProductService productService;
     private final OrderMapper orderMapper;
+    private final ProductMapper productMapper;
 
-    public List<Order> getAllOrders(){
-        return orderRepository.findAll();
+    public List<OrderResponseDto> getAllOrders(boolean orderItems) {
+
+        List<Order> orders = orderRepository.findAll();
+        List<OrderResponseDto> responses = new ArrayList<>();
+
+        Map<Long, List<OrderProducts>> itemsMap = new HashMap<>();
+
+        if (orderItems) {
+            List<Long> orderIds = orders.stream()
+                    .map(Order::getId)
+                    .toList();
+
+            List<OrderProducts> items = orderProductRepository.findByOrderIds(orderIds);
+
+            itemsMap = items.stream()
+                    .collect(Collectors.groupingBy(op -> op.getOrder().getId()));
+        }
+
+        for (Order order : orders) {
+
+            OrderResponseDto dto = orderMapper.mapToOrderResponseDto(order);
+
+            if (orderItems) {
+
+                List<OrderItemsDto> itemDtos = itemsMap
+                        .getOrDefault(order.getId(), List.of())
+                        .stream()
+                        .map(op -> new OrderItemsDto(
+                                op.getProduct().getId(),
+                                op.getQuantity()))
+                        .toList();
+
+                dto.setOrderItems(itemDtos);
+            }
+
+            responses.add(dto);
+        }
+
+        return responses;
     }
-
     @Transactional
     public OrderResponseDto createOrder(CreateOrderDto dto) {
 
@@ -44,7 +85,7 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        List<Long> productIds = dto.getItems()
+            List<Long> productIds = dto.getItems()
                 .stream()
                 .map(OrderItemsDto::getProductId)
                 .toList();
