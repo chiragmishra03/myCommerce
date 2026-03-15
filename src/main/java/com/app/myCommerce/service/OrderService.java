@@ -138,5 +138,28 @@ public class OrderService {
     }
 
 
+    public OrderResponseDto getOrderById(Long id) {
 
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("Order with Id " + id + " Not found"));
+
+        OrderResponseDto response = orderMapper.mapToOrderResponseDto(order);
+
+        List<OrderProducts> orderProducts = orderProductRepository.findByOrderIds(List.of(order.getId()));
+
+        List<OrderItemsDto> items = orderProducts.stream()
+                .map(op -> OrderItemsDto.builder()
+                        .productId(op.getProduct().getId())
+                        .quantity(op.getQuantity())
+                        .build())
+                .toList();
+
+        response.setOrderItems(items);
+
+        return response;
+    }
+
+    public void deleteBy(Long id) {
+        orderRepository.deleteById(id);
+    }
 }

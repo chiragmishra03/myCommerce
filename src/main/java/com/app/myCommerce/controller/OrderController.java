@@ -34,13 +34,15 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
-        throw new UnsupportedOperationException("Not implemented");
+    public ResponseEntity<APIStructure<String>> deleteOrder(@PathVariable("id") Long id) {
+        orderService.deleteBy(id);
+        return ResponseEntity.status(HttpStatus.OK).body(APIStructure.success("Order with Id "+id+" deleted","Deleted Successfully"));
     }
 
     @GetMapping("/{id}")
-    public Order getOrderById(@PathVariable Long id) {
-        throw new UnsupportedOperationException("Not implemented");
+    public ResponseEntity<APIStructure<OrderResponseDto>> getOrderById(@PathVariable("id") Long id) {
+        OrderResponseDto orderResponseDto = orderService.getOrderById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(APIStructure.success(orderResponseDto,"Order with id "+id+" fetched successfully"));
     }
 
     @GetMapping("/user/{userId}")
