@@ -18,6 +18,7 @@ public class MyCommerceApplication {
 		});
 
 		SpringApplication.run(MyCommerceApplication.class, args);
+
 	}
 
 }
