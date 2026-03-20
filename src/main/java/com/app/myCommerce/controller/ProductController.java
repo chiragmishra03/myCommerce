@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -20,7 +22,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/get-all")
-    public ResponseEntity<APIStructure<?>> getAllProducts(){
+    public ResponseEntity<APIStructure<List<GetProductResponseDTO>>> getAllProducts(){
         return ResponseEntity.status(HttpStatus.OK).body(APIStructure.success(productService.getAllProducts(), "Products fetched successfully" ));
     }
 
@@ -57,7 +59,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<APIStructure<?>> getProductsByCategory(
+    public ResponseEntity<APIStructure<List<GetProductResponseDTO>>> getProductsByCategory(
             @RequestParam(value = "categoryName",required = false) String category){
 
         return ResponseEntity.status(HttpStatus.OK).body(APIStructure.success(productService.getProductsByCategory(category), "Products fetched successfully"));

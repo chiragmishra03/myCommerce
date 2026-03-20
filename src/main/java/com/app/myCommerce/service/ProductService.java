@@ -67,7 +67,9 @@ public class ProductService {
                 price(savedProduct.getPrice()).
                 image(savedProduct.getImage()).
                 rating(savedProduct.getRating()).
-                units(savedProduct.getUnits()).build();
+                units(savedProduct.getUnits()).
+                id(savedProduct.getId()).
+                build();
 
         return getProductResponseDTO;
     }
@@ -76,8 +78,22 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> getProductsByCategory(String category) {
-        return productRepository.findByCategory(category);
+    public List<GetProductResponseDTO> getProductsByCategory(String categoryName) {
+        List<Product> products = productRepository.findByCategory_Name(categoryName);
+        List<GetProductResponseDTO> responseDTOS = new ArrayList<>();
+        for(Product product:products){
+            GetProductResponseDTO responseDTO = GetProductResponseDTO.builder()
+                    .title(product.getTitle())
+                    .description(product.getDescription())
+                    .id(product.getId())
+                    .rating(product.getRating())
+                    .price(product.getPrice())
+                    .units(product.getUnits())
+                    .image(product.getImage())
+                    .build();
+            responseDTOS.add(responseDTO);
+        }
+        return responseDTOS;
     }
 
     public GetProductResponseDTO updateProduct(Long id,CreateProductRequestDTO requestDTO){
